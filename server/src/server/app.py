@@ -12,6 +12,9 @@ from server.utils import websocket_stream
 from server.prompt import INSTRUCTIONS
 from server.tools import TOOLS
 
+from dotenv import load_dotenv
+load_dotenv('.env')
+
 
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
