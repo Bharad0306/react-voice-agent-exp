@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microphone to Speaker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #0a4ecd, #9b59dd);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .wave {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 200%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            animation: wave-animation 6s infinite linear;
+        }
+
+        .wave:nth-child(2) {
+            top: 60%;
+            animation-delay: 2s;
+        }
+
+        .wave:nth-child(3) {
+            top: 70%;
+            animation-delay: 4s;
+        }
+
+        @keyframes wave-animation {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffffff, #d4f1f9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(136, 132, 195, 0.6), 0 0 40px rgba(207, 222, 243, 0.4);
+            animation: pulse 3s infinite;
+        }
+
+        .circle.active {
+            background: radial-gradient(circle, #bc0d0d, #f58181);
+            box-shadow: 0 0 25px rgba(161, 196, 253, 0.8), 0 0 50px rgba(130, 170, 240, 0.6);
+        }
+
+        .circle span {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div id="voiceAssistant" class="circle">
+        <span id="statusText">Start Audio</span>
+    </div>
+
+    <script>
+        // Toggle audio status and update animation
+        const voiceAssistant = document.getElementById('voiceAssistant');
+        const statusText = document.getElementById('statusText');
+        let isAudioOn = false;
+
+        async function startAudio() {
+            try {
+                // Implement microphone and speaker handling logic here
+                console.log("Audio started");
+            } catch (error) {
+                console.error('Error accessing the microphone', error);
+                alert('Error accessing the microphone. Please check your settings and try again.');
+            }
+        }
+
+        async function stopAudio() {
+            try {
+                // Implement logic to stop audio handling here
+                console.log("Audio stopped");
+            } catch (error) {
+                console.error('Error stopping the microphone', error);
+            }
+        }
+
+        voiceAssistant.addEventListener('click', async () => {
+            if (!isAudioOn) {
+                await startAudio();
+                voiceAssistant.classList.add('active');
+                statusText.textContent = 'Stop Audio';
+                isAudioOn = true;
+            } else {
+                await stopAudio();
+                voiceAssistant.classList.remove('active');
+                statusText.textContent = 'Start Audio';
+                isAudioOn = false;
+            }
+        });
+    </script>
+</body>
+</html>
